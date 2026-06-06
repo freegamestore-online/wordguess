@@ -1,9 +1,5 @@
 name: Deploy to R2
 
-# FreeGameStore deployment
-# Builds and publishes using the official CLI
-# Requires FGS_TOKEN repository secret
-
 on:
   push:
     branches: [main]
@@ -16,39 +12,34 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: web/pnpm-lock.yaml
 
-      - name: Install
-        working-directory: web
-        run: pnpm install
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Build
-        working-directory: web
+      - name: Build game
         run: pnpm build
 
-      - name: Check Compliance
-        working-directory: web
+      - name: Check FreeGameStore compliance
         run: npx -y @freegamestore/cli@latest check
 
       - name: Verify build output
         run: |
           test -d ./web/dist || { echo "::error::No build output at web/dist"; exit 1; }
           test -n "$(ls -A ./web/dist)" || { echo "::error::web/dist is empty"; exit 1; }
-
-      - name: Publish to FreeGameStore
-        env:
-          FGS_TOKEN: ${{ secrets.FGS_TOKEN }}
-        working-directory: web
-        run: |
-          npx -y @freegamestore/cli@latest publish
