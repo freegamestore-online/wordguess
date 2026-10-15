@@ -59,9 +59,9 @@ export default defineConfig({
       // field passes through to the emitted manifest.webmanifest; browsers
       // ignore unknown members.
       manifest: {
-        name: "wordguess",
-        short_name: "wordguess",
-        description: "wordguess — free forever",
+        name: "Five-Letter Word",
+        short_name: "Five-Letter Word",
+        description: "Five-Letter Word — free forever",
         start_url: "/",
         display: "standalone",
         background_color: "#0f0f0f",

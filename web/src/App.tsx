@@ -165,7 +165,7 @@ export default function App() {
   const appContent = (
     <div className="flex-1 w-full max-w-5xl mx-auto px-4 py-8 flex flex-col pt-safe">
       <header className="mb-8 text-center relative">
-        <h1 className="text-4xl md:text-5xl font-['Fraunces'] font-black text-[var(--ink)] tracking-tight">Word<span className="text-[var(--accent)]">Guess</span></h1>
+        <h1 className="text-4xl md:text-5xl font-['Fraunces'] font-black text-[var(--ink)] tracking-tight">Five-Letter <span className="text-[var(--accent)]">Word</span></h1>
         {gameState === 'menu' && <p className="mt-3 text-[var(--muted)] font-medium text-lg">Choose a category to start playing</p>}
       </header>
 
@@ -242,7 +242,7 @@ export default function App() {
   );
 
   return (
-    <GameShell topbar={<GameTopbar title="WordGuess" score={gameState !== 'menu' ? score : undefined} actions={<ThemeToggle />} />}>
+    <GameShell topbar={<GameTopbar title="Five-Letter Word" score={gameState !== 'menu' ? score : undefined} actions={<ThemeToggle />} />}>
       <GameAuth />
       <div className="h-full w-full overflow-y-auto overflow-x-hidden selection:bg-[var(--accent)] selection:text-white pb-safe bg-[var(--bg)] text-[var(--ink)] transition-colors duration-300">
         <div className="min-h-full flex flex-col relative">
